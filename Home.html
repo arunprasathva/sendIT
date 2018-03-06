@@ -1,0 +1,136 @@
+<html lang="en">
+<!DOCTYPE html>
+<html>
+
+	<title>Send IT</title>
+	
+	<head>
+		<link rel="stylesheet" type="text/css" href="Home.css" media="screen" />
+		<meta name="theme-color" content="#db5945">
+		
+		<script>
+		
+			var url = "https://api.whatsapp.com/send?phone=";//+918123445500&text=Test";
+			
+			var MESSAGE_HOME = "Reached home";
+			var MESSAGE_NEED_SOMETHING = "Need to bring something home today?";
+			var MESSAGE_LEAVING = "Leaving from office now";
+			var MESSAGE_TRAFFIC = "High traffic";
+			var MESSAGE_LATE = "Will be late home today";
+			var MESSAGE_CALLBACK = "If not busy; Give me a call back";
+		
+			function singingOff() {
+				sendMessage(getPhoneNumber(), MESSAGE_LEAVING);
+			}
+			
+			function lateToday() {
+				sendMessage(getPhoneNumber(), MESSAGE_LATE);
+			}
+			
+			function reachedHome() {
+				sendMessage(getPhoneNumber(), MESSAGE_HOME);
+			}
+			
+			function traffic() {
+				sendMessage(getPhoneNumber(), MESSAGE_TRAFFIC);
+			}
+			
+			function needSomething() {
+				sendMessage(getPhoneNumber(), MESSAGE_NEED_SOMETHING);
+			}
+			
+			function callBack() {
+				sendMessage(getPhoneNumber(), MESSAGE_CALLBACK);
+			}
+			
+			function getPhoneNumber() {
+				return document.getElementById("phoneNumber").value;
+			}
+			
+			function sendMessage(number, message) {
+				if (number == "") {
+					alert("Fill phone number");
+					return;
+				}
+				if (number.length < 10) {
+					alert("Enter valid number");
+					return;
+				}
+				window.open(url+number+"&text="+message);
+			}			
+        
+			function saveValue(e){
+				var id = e.id;  // get the sender's id to save it . 
+				var val = e.value; // get the value. 
+				localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+			}
+
+			//get the saved value function - return the value of "v" from localStorage. 
+			function getSavedValue (v){
+				if (localStorage.getItem(v) === null) {
+					return "";// You can change this to your defualt value. 
+				}
+				
+				return localStorage.getItem(v);
+			}
+			
+			window.onload = function() {
+				document.getElementById('phoneNumber').value = getSavedValue("phoneNumber");
+			};
+		
+		</script>
+	</head>
+
+	<body>
+		<div id="container">
+		
+			<div id="itemTop">
+				
+				<label>Phone Number : </label>
+				<input id="phoneNumber" type="text" placeholder="Phone Number" maxlength="13" onkeyup='saveValue(this);'>
+				
+			</div>
+		
+			<div id="item">
+			
+				<div id="boxLeft" onclick="singingOff()">
+					<img src="img/signing_off.png" >
+					<label style='display: inherit; font-weight: bold; margin-top: 10px;'>Leaving Office</label>
+				</div>
+				<div id="boxRight" onclick="lateToday()"> 
+					<img src="img/late_today.png">
+					<label style='display: inherit; font-weight: bold; margin-top: 10px;'>Will Be Late Today</label>
+				</div>
+				
+			</div>
+			
+			<div id="item">
+			
+				<div id="boxLeft" onclick="reachedHome()">
+					<img src="img/reached_home.png">
+					<label style='display: inherit; font-weight: bold; margin-top: 10px;'>Reached Home</label>
+				</div>
+				<div id="boxRight" onclick="traffic()"> 
+					<img src="img/traffic.png">
+					<label style='display: inherit; font-weight: bold; margin-top: 10px;'>Traffic</label>
+				</div>
+				
+			</div>
+			
+			<div id="item">
+			
+				<div id="boxLeft" onclick="needSomething()">
+					<img src="img/need_something.png">
+					<label style='display: inherit; font-weight: bold; margin-top: 10px;'>Need Something Home?</label>
+				</div>
+				<div id="boxRight" onclick="callBack()"> 
+					<img src="img/call_back.png">
+					<label style='display: inherit; font-weight: bold; margin-top: 10px;'>Call Back</label>
+				</div>
+				
+			</div>
+			
+		</div>
+	</body>
+
+</html>
